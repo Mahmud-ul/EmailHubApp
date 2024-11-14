@@ -1,0 +1,40 @@
+﻿@using EmailHubApp.Models;
+@{
+    ViewData["Title"] = "SearchRequirementsList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Search-Requirement</h2>
+<hr /><a asp-action="AddUpdateSearchRequirements" class="btn btn-success" style="text-decoration: none;">Create</a>
+<br />
+<br />
+<div>
+    <table id="example" class="table table-striped nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>API Key</th>
+                <th>CX</th>
+                <th>Search Count</th>
+                <th>Searchable(Max 100)</th>
+                <th>Active Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (SearchRequirementsOperation item in Model)
+            {
+                <tr>
+                    <td>@item.ApiKey</td>
+                    <td>@item.CX</td>
+                    <td>@item.SearchCount</td>
+                    <td>@(100 - item.SearchCount)</td>
+                    <td>@(item.IsActive == true ? "Active" : "Inactive")</td>
+                    <td>
+                        <a asp-action="AddUpdateSearchRequirements" asp-controller="Security" asp-route-id="@item.ID" class="btn btn-warning" style="text-decoration: none"><b>Update</b></a> |
+                        <a asp-action="RemoveSearchRequirements" asp-controller="Security" asp-route-id="@item.ID" class="btn btn-danger" style="text-decoration: none" onclick="return confirm('Are you sure?')"><b>Delete</b></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

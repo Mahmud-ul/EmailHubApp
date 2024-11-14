@@ -1,0 +1,67 @@
+﻿@using Microsoft.AspNetCore.Http
+@using EmailHubApp.Models;
+@model UserTypeOperation
+@{
+    ViewData["Title"] = "AddUpdateUserType";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger"><strong>Error:&nbsp;</strong>@ViewBag.ErrorMessage</div>
+}
+@{
+    var title = Context.Session.GetString("Title");
+}
+<h2>@title User-Type</h2>
+<hr />
+<br />
+<div>
+    <form method="post" asp-controller="Security" asp-action="AddUpdateUserType">
+        <div class="row">
+            <div class="col-md-8">
+                <div>
+                    <label asp-for="Name" class="col-md-3">User Type</label>
+                    <input type="text" asp-for="Name" class="col-md-6" required="required" placeholder="Enter User-Type" />
+                    <span asp-validation-for="Name" class="text-danger"></span><br />
+                    @if (ViewBag.userTypeExists != null)
+                    {
+                        <label class="col-md-3"></label>
+                        <span style="color:red;">@ViewBag.userTypeExists</span>
+                    }
+                </div><br />
+
+                <div>
+                    <label asp-for="Limit" class="col-md-3">Search Limit</label>
+                    <input type="text" asp-for="Limit" class="col-md-6" required="required" placeholder="Enter Search Limit" />
+                    <span asp-validation-for="Limit" class="text-danger"></span><br />                   
+                </div><br />
+
+                <div class="checkbox">
+                    <label class="col-md-3"></label>
+                    <label>
+                        <input type="checkbox" asp-for="IsActive"> Active User Type
+                    </label>
+                    @if (ViewBag.userTypeActive != null)
+                    {
+                        <br /><label class="col-md-3"></label>
+                        <span style="color:red;">@ViewBag.userTypeActive</span>
+                    }
+                </div><br />
+                <div>
+                    <label class="col-md-3"></label>
+                    @if (title == "Create")
+                    {
+                        <button type="submit" class="btn btn-success">Create</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    }
+                    <a asp-controller="Security" asp-action="UserTypeList" class="btn btn-secondary">User Type-List</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

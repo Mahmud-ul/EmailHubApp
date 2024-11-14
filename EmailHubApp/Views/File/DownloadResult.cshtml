@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewData["Title"] = "DownloadResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger"><strong>Error:&nbsp;</strong>@ViewBag.ErrorMessage</div>
+}
+

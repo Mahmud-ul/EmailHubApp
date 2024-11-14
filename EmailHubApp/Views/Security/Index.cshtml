@@ -1,0 +1,64 @@
+﻿@using EmailHubApp.Models;
+@model IEnumerable<UserOperation> 
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger"><strong>Error:&nbsp;</strong>@ViewBag.ErrorMessage</div>
+}
+
+<h2>User List</h2>
+<hr /><a asp-action="AddUpdateUser" class="btn btn-success" style="text-decoration: none;">Create</a>
+<br />
+<br />
+<div>
+<table id="example" class="table table-striped nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>UserID</th>
+                <th>Active Status</th>
+                <th>User Name</th>
+                <th>User Type</th>
+                <th>Total Searched</th>
+                <th>Email</th>
+
+                @* <th>Migration Date</th>
+                <th>Duration</th> *@
+
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(UserOperation item in Model)
+            {
+                <tr>
+                    <td>@item.UserName</td>
+                    <td>@(item.IsActive == true? "Active" : "Inactive")</td>
+                    <td>@item.Name</td>
+                    <td>
+                        @foreach (UserTypeOperation item2 in ViewBag.userType)
+                        {
+                            if(item2.ID == item.TypeID)
+                            {
+                                @item2.Name
+                                break;
+                            }
+                        }                       
+                    </td>
+                    <td>@item.TotalSearched</td>
+                    <td>@item.Email</td>
+                    @* <td>@item.MembershipStarted</td>
+                    <td>@item.MembershipDuration</td> *@
+                    <td>
+                        <a asp-action="AddUpdateUser" asp-controller="Security" asp-route-id="@item.ID" class="btn btn-outline-warning" style="text-decoration: none"><b>Update</b></a> |
+                        <a asp-action="RemoveUser" asp-controller="Security" asp-route-id="@item.ID" class="btn btn-outline-danger" style="text-decoration: none" onclick="return confirm('Are you sure?')"><b>Delete</b></a>
+                    </td>
+                </tr>
+            }           
+        </tbody>
+    </table>
+</div>

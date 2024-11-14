@@ -1,0 +1,54 @@
+﻿@using EmailHubApp.Models;
+@{
+    ViewData["Title"] = "SearchQueryList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger"><strong>Error:&nbsp;</strong>@ViewBag.ErrorMessage</div>
+}
+<h2>Search-Query</h2>
+<hr /><a asp-action="AddUpdateSearchQuery" class="btn btn-success" style="text-decoration: none;">Create</a>
+<br />
+<br />
+<div>
+    <table id="example" class="table table-striped nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>Start</th>
+                <th>End</th>
+                <th>Active Status</th>                
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (SearchQueryOperation item in Model)
+            {
+                <tr>
+                    <td>@item.Start</td>
+                    <td>@item.End</td>
+                    <td>
+                        @if (item.IsActive == false)
+                        {
+                            <a asp-action="UpdateSearchQueryStatus" asp-controller="Security" asp-route-id="@item.ID" class="btn btn-outline-success" style="text-decoration: none"><b>Active</b></a>
+                        }
+                        else
+                        {
+                            <b>Activated</b>
+                        }
+                    </td>                  
+                    <td>
+                        <a asp-action="AddUpdateSearchQuery" asp-controller="Security" asp-route-id="@item.ID" class="btn btn-outline-warning" style="text-decoration: none"><b>Update</b></a>                
+                        @if (item.IsActive == false)
+                        {
+                            <span> | </span>
+                            <a asp-action="RemoveSearchQuery" asp-controller="Security" asp-route-id="@item.ID" class="btn btn-outline-danger" style="text-decoration: none" onclick="return confirm('Are you sure?')"><b>Delete</b></a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

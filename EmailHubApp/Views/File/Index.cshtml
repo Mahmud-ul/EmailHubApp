@@ -1,0 +1,52 @@
+﻿@model SearchedDataOperation
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger"><strong>Error:&nbsp;</strong>@ViewBag.ErrorMessage</div>
+}
+@if (ViewBag.DataList != null)
+{
+    <h2>Download Result Data</h2><hr />
+
+    List<string> Result = ViewBag.DataList;
+    int count = 0, serial = 1;
+
+    if (Result!= null && Result.Count> 0)
+    {
+        count = Result.Count;
+
+        <form asp-controller="File" asp-action="DownloadResult" method="post">
+            <div>
+                <table id="example" class="table table-striped nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Serial</th>
+                            <th>Search Key</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        @for (int i = 0; i < count; i += 2)
+                        {
+                            <tr>
+                                <td>@(serial++)</td>
+                                <td>@Result[i]</td>                                
+                                <td>@Result[i+1]</td>
+
+                                <input type="hidden" name="Result" value="@Result[i]" />
+                                <input type="hidden" name="Result" value="@Result[i+1]" />
+                            </tr>                           
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <button type="submit" class="btn btn-dark">Download</button>
+        </form>
+    }   
+}
+
+

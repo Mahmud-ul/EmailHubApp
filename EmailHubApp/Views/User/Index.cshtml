@@ -1,0 +1,76 @@
+﻿@using EmailHubApp.Model.Models;
+@using Microsoft.AspNetCore.Http
+@using EmailHubApp.Models;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var user = Context.Session.GetString("UserName");
+    var type = Context.Session.GetString("Membership");
+    var limit = Context.Session.GetString("Limit");
+    var searched = Context.Session.GetString("Searched");
+    int serial = 1;
+}
+
+<div>
+    <div><b>User: </b>@user</div>
+    <div><b>Membership: </b>@type</div>
+    <div><b>Limit:</b>
+        @if (type=="Admin")
+        {
+            <span>No Limit</span>
+        }
+        else
+        {
+            <span>@limit</span>
+        }
+    </div>
+    <div><b>Total Searched:</b> @searched</div>
+    
+    @if (type != "Admin")
+    {
+        <div><b>Available Search:</b>
+            <span>@(Convert.ToInt32(limit) - Convert.ToInt32(searched))</span>
+        </div>
+    }       
+    
+</div><hr />
+
+<div>
+    <table id="example" class="table table-striped nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>Serial</th>
+                <th>Web-Link</th>
+                <th>Result</th>
+                @if (type == "Admin")
+                {
+                    <th>User</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (SearchedData item in ViewBag.searchedData)
+            {
+                <tr>
+                    <td>@(serial++)</td>
+                    <td>@item.SearchedKey</td>
+                    <td>@item.SearchedValue</td>
+                    @if (type == "Admin")
+                    {
+                        foreach (UserOperation i in ViewBag.User)
+                        {
+                            if (i.ID == @item.UserID)
+                            {
+                                <td>@i.UserName</td>
+                                break;
+                            }
+                        }
+                    }   
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

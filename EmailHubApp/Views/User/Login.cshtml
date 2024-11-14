@@ -1,0 +1,49 @@
+﻿@using EmailHubApp.Models;
+@model UserOperation;
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_User.cshtml";
+}
+
+<h2 style="text-align:center; padding-top: 2%;">Login</h2><hr />
+
+<div>
+    <form method="post" asp-controller="User" asp-action="Login">
+        <div style="padding-left:39%;padding-top:2%;">
+            <div class="col-md-8">
+                <div>
+                    <label asp-for="UserName" class="col-md-2">UserID</label>
+                    <input type="text" asp-for="UserName" class="col-md-6" required="required" placeholder="Enter UserID or Email" />
+                    <span asp-validation-for="UserName" class="text-danger"></span><br />
+                    @if (ViewBag.UserNameExists != null)
+                    {
+                        <label class="col-md-2"></label>
+                        <span style="color:red;">@ViewBag.UserNameExists</span>
+                    }
+                </div><br />
+
+                <div>
+                    <label asp-for="Password" class="col-md-2">Password</label>
+                    <input type="password" asp-for="Password" class="col-md-6" required="required" placeholder="Enter Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span><br />
+                    @if (ViewBag.WrongPassword != null)
+                    {
+                        <label class="col-md-2"></label>
+                        <span style="color:red;">@ViewBag.WrongPassword</span>
+                    }
+                </div><br />
+
+                <div>
+                    <label class="col-md-2"></label>
+                    <button type="submit" class="btn btn-success">Login</button> &nbsp;&nbsp;
+                    Forgot Password? <a asp-controller="User" asp-action="ResetPassword" style="text-decoration:none; color:blue">Reset</a>
+                </div>
+
+                <div>
+                    <label class="col-md-2"></label>
+                    Not a User? <a asp-controller="User" asp-action="Signup" style="text-decoration:none; color:blue">Signup</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,64 @@
+﻿@using Microsoft.AspNetCore.Http
+@using EmailHubApp.Models;
+@model SearchQueryOperation
+@{
+    ViewData["Title"] = "AddUpdateSearchQuery";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger"><strong>Error:&nbsp;</strong>@ViewBag.ErrorMessage</div>
+}
+@{
+    var title = Context.Session.GetString("Title");
+}
+<h2>@title Search-Query</h2>
+<hr />
+<br />
+<div>
+    <form method="post" asp-controller="Security" asp-action="AddUpdateSearchQuery">
+        <div class="row">
+            <div class="col-md-8">
+                <div>
+                    <label asp-for="Start" class="col-md-3">Start Part</label>
+                    <input type="text" asp-for="Start" class="col-md-6" required="required" placeholder="Enter Start Part" />
+                    <span asp-validation-for="Start" class="text-danger"></span><br />                    
+                </div><br />
+
+                <div>
+                    <label asp-for="End" class="col-md-3">End Part</label>
+                    <input type="text" asp-for="End" class="col-md-6" required="required" placeholder="Enter End Part" />
+                    <span asp-validation-for="End" class="text-danger"></span><br />
+                    @if (ViewBag.searchQueryExists != null)
+                    {
+                        <br />
+
+                        <label class="col-md-3"></label>
+                        <span style="color:red;">@ViewBag.searchQueryExists</span>
+                    }
+                </div><br />
+
+                <div class="checkbox">
+                    <label class="col-md-3"></label>
+                    <label>
+                        <input type="checkbox" asp-for="IsActive"> Active Search Query
+                    </label>                    
+                </div><br />
+                <div>
+                    <label class="col-md-3"></label>
+                    @if (title == "Create")
+                    {
+                        <button type="submit" class="btn btn-success">Create</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    }
+                    <a asp-controller="Security" asp-action="SearchQueryList" class="btn btn-secondary">Search Query List</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

@@ -1,0 +1,66 @@
+﻿@using EmailHubApp.Models;
+@model UserOperation
+@{
+    ViewData["Title"] = "Signup";
+    Layout = "~/Views/Shared/_User.cshtml";
+}
+
+<h2 style="text-align:center; padding-top: 2%;">Registration</h2><hr />
+
+<div>
+    <form method="post" asp-controller="User" asp-action="Signup">
+        <div style="padding-left:30%;padding-top:2%;">
+            <div class="col-md-8">
+                <div>
+                    <label asp-for="Name" class="col-md-3">Name</label>
+                    <input type="text" asp-for="Name" class="col-md-6" required="required" placeholder="Enter User Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span><br />
+                </div><br />
+
+                <div>
+                    <label asp-for="UserName" class="col-md-3">UserID</label>
+                    <input type="text" asp-for="UserName" class="col-md-6" required="required" placeholder="Enter UserID" />
+                    <span asp-validation-for="UserName" class="text-danger"></span><br />
+                    @if (ViewBag.UserNameExists != null)
+                    {
+                        <label class="col-md-3"></label>
+                        <span style="color:red;">@ViewBag.UserNameExists</span>
+                    }
+                </div><br />
+
+                <div>
+                    <label asp-for="Email" class="col-md-3">Email</label>
+                    <input type="text" asp-for="Email" class="col-md-6" required="required" placeholder="Enter Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span><br />
+                    @if (ViewBag.EmailExists != null)
+                    {
+                        <label class="col-md-3"></label>
+                        <span style="color:red;">@ViewBag.EmailExists</span>
+                    }
+                </div><br />
+
+                <div>
+                    <label asp-for="Password" class="col-md-3">Password</label>
+                    <input type="password" asp-for="Password" class="col-md-6" required="required" placeholder="Enter Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span><br />                  
+                </div><br />
+
+                <div>
+                    <label class="col-md-3">Confirm Password</label>
+                    <input type="password" name="confirm" class="col-md-6" required="required" placeholder="Confirm Password" />
+                    @if (ViewBag.PasswordMismatched != null)
+                    {
+                        <label class="col-md-3"></label>
+                        <span style="color:red;">@ViewBag.PasswordMismatched</span>
+                    }           
+                </div><br />
+
+                <div>
+                    <label class="col-md-3"></label>
+                    <button type="submit" class="btn btn-outline-success">Signup</button> &nbsp;&nbsp;
+                    Already User? <a asp-controller="User" asp-action="Login" style="text-decoration:none; color:blue">Login</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
